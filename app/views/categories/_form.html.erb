@@ -17,7 +17,7 @@
 
         <div>
             <%= f.label :category_picture,class:"text-sm font-medium" %>
-            <%= f.file_field :category_picurl, class: "mt-1 block w-fit cursor-pointer text-sm  text-gray-900 file:mr-4 file:py-2 file:px-4 file:rounded-xl  file:text-sm file:font-semibold file:border file:border-rose-400 file:text-black hover:file:bg-blue-50" %>
+            <%= f.file_field :category_picurl, class: "mt-1 block w-fit cursor-pointer text-sm  text-gray-900 file:bg-white file:ml-0 file:py-2 file:px-4 file:rounded-xl  file:text-sm file:font-semibold file:border file:border-rose-400 file:text-black hover:file:bg-blue-50" %>
             <% if @category.errors[:category_picurl].any? %>
             <h1 class="text-sm text-red-600"><%= @category.errors[:category_picurl].first %></h1>
             <% end %>

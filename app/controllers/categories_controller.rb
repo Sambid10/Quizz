@@ -10,7 +10,7 @@ class CategoriesController < ApplicationController
       question.admin_id=current_admin.id
     end
     if @category.save
-      redirect_to @category, notice: "Category created!"
+      redirect_to pages_admin_path, notice: "Category created!"
     else
       render :new, status: :unprocessable_entity
     end
@@ -38,6 +38,18 @@ def update_questions
     render :edit_questions, status: :unprocessable_entity
   end
 end
+
+
+def destroy
+  @category = Category.find(params[:id])
+  if @category.destroy
+    flash[:notice] = "Quiz deleted successfully."
+  else
+    flash[:alert] = "Failed to delete quiz."
+  end
+  redirect_to pages_admin_path
+end
+
 
   private
   def category_params

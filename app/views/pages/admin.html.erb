@@ -1,38 +1,71 @@
-<div class="flex flex-col gap-2 w-full">
-<div class="flex justify-center w-full">
-  <%= link_to new_category_path, class: "mt-4 border border-rose-400 text-black h-10 rounded-full w-fit px-4 shadow-xl flex items-center justify-center gap-2 font-semibold text-base hover:opacity-90 cursor-pointer hover:bg-blue-50 ease-in duration-200 transition-colors" do %>
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-    </svg>
-    Add new quiz
-  <% end %>
-</div>
-<div class="flex items-center gap-1 font-medium text-base">
-<h1>Total Quizes:</h1>
- <%= @categories.count %>
- </div>
-<div class="grid mt-2 lg:grid-cols-3 gap-4 grid-cols-1 sm:grid-cols-2">
-  <% @categories.each do |cat| %>
-   
-    <div class="flex group flex-col relative gap-2 p-2 border border-gray-400 rounded-xl shadow-md">
-      <% if cat.category_picurl.attached? %>
-      <div class="aspect-[16/9] overflow-hidden rounded-xl">
-        <%= image_tag url_for(cat.category_picurl), class:"rounded-xl aspect-[16/9] object-cover group-hover:scale-110 transition-all ease-in duration-200" %>
-        </div>
-      <% end %>
-
-      <h1 class="font-semibold capitalize text-2xl"><%= cat.category_name %></h1>
-      <h1 class="font-semibold capitalize text-gray-500 text-xs -mt-2"><%= cat.category_description %></h1>
-      <div class="flex items-center gap-1 font-medium text-sm">
-<h1>Total Questions:</h1>
- <%= cat.questions.count %>
- </div>
-      <%= link_to "Edit Questions", edit_questions_category_path(cat), class: "absolute right-2 text-sm bottom-2 text-blue-500 underline" %>
+<div class="flex flex-col gap-2 w-full pb-4">
+    <div class="flex justify-center w-full">
+        <%= link_to new_category_path, class: "mt-4 border border-rose-400 text-black h-10 rounded-full w-fit px-4 shadow-xl flex items-center justify-center gap-2 font-semibold text-base hover:opacity-90 cursor-pointer hover:bg-blue-50 ease-in duration-200 transition-colors" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+        </svg>
+        Add new quiz
+        <% end %>
     </div>
-  <% end %>
+    <div class="flex items-center gap-1 font-medium text-base">
+        <h1>Total Quizes:</h1>
+        <%= @categories.count %>
+    </div>
+    <div class="grid mt-2 lg:grid-cols-3 gap-4 grid-cols-1 sm:grid-cols-2">
+        <% @categories.each do |cat| %>
+
+        <div class="flex group flex-col relative gap-2 px-2 pt-4 pb-6 border border-gray-400 rounded-xl shadow-md">
+            <% if cat.category_picurl.attached? %>
+            <div class="aspect-[16/9] overflow-hidden rounded-xl">
+                <%= image_tag url_for(cat.category_picurl), class:"rounded-xl aspect-[16/9] object-cover group-hover:scale-110 transition-all ease-in duration-200" %>
+            </div>
+            <% end %>
+
+            <h1 class="font-semibold capitalize text-2xl"><%= cat.category_name %></h1>
+            <h1 class="font-semibold capitalize text-gray-500 text-xs -mt-2"><%= cat.category_description %></h1>
+            <div class="flex items-center gap-1 font-medium text-sm">
+                <h1>Total Questions:</h1>
+                <%= cat.questions.count %>
+            </div>
+            <%= link_to "Edit Questions", edit_questions_category_path(cat), class: "absolute right-2 text-sm bottom-6 text-blue-500 underline" %>
+            <% modal_id = "delete-modal-#{cat.id}" %>
+
+            <div data-controller="modal">
+
+                <!-- Delete Button -->
+                <button data-modal-target="<%= modal_id %>" data-modal-toggle="<%= modal_id %>" class="absolute right-2 text-sm bottom-1 text-red-500 underline cursor-pointer" type="button">
+                    Delete Quiz
+                </button>
+
+                <!-- Delete Modal -->
+                <div id="<%= modal_id %>" class="hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden">
+                    <div class="relative p-4 w-full max-w-lg mx-auto max-h-full">
+                        <div class="bg-white rounded-xl p-4 shadow">
+                            <div class="flex flex-col gap-4">
+                                <h1 class="font-medium text-lg">Are you sure you want to delete your quiz?</h1>
+                                <div class="flex justify-end">
+                                    <%= form_with url: category_path(cat),
+                                    data: {action: "submit->modal#hideModal"},
+                                    method: :delete, data: { turbo: false }, class: "inline" do %>
+                                    <%= submit_tag "Delete Quiz", 
+                                       data: { confirm: "Are you sure?" }, 
+                                      class: "text-white bg-red-400 hover:bg-red-500 rounded-xl w-fit px-4 py-1.5 cursor-pointer" %>
+                                    <% end %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+        <% end %>
+    </div>
+
 </div>
-
-  </div>
 </div>
-
-

@@ -17,10 +17,10 @@
             <h1 class="text-xl font-medium">Answers:</h1>
 
             <% answers.each_with_index do |answer_text, i| %>
-            <div class="flex items-start gap-3 py-1 px-2 rounded-xl hover:bg-stone-100 cursor-pointer transition-all">
-                <%= radio_button_tag "answers[#{question.id}]", answer_text, false, id: "question_#{question.id}_answer_#{i}", class: "cursor-pointer mt-2" %>
-                <%= label_tag "question_#{question.id}_answer_#{i}", answer_text, class: "cursor-pointer text-base leading-relaxed select-none" %>
-            </div>
+            <label for="question_<%= question.id %>_answer_<%= i %>" class="flex items-start gap-3 py-1 px-2 rounded-xl hover:bg-stone-100 cursor-pointer transition-all">
+                <%= radio_button_tag "answers[#{question.id}]", answer_text, false, id: "question_#{question.id}_answer_#{i}", class: "mt-2" %>
+                <span class="text-base leading-relaxed select-none"><%= answer_text %></span>
+            </label>
             <% end %>
         </div>
         <% end %>
