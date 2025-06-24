@@ -1,0 +1,18 @@
+<h2>Answer Questions for <%= @category.category_name %></h2>
+
+<%= form_with url: submit_answers_category_path(@category), method: :post do %>
+  <% @questions.each do |question| %>
+    <div class="mb-6 border p-4 rounded-lg shadow">
+      <p class="font-semibold"><%= question.content %></p>
+
+      <% [:answer1, :answer2, :answer3, :answer4].each do |answer_option| %>
+        <div>
+          <%= radio_button_tag "user_answers[#{question.id}][selected_answer]", question.send(answer_option), false, id: "#{question.id}_#{answer_option}" %>
+          <%= label_tag "#{question.id}_#{answer_option}", question.send(answer_option) %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= submit_tag "Submit Answers", class: "px-4 py-2 bg-blue-500 text-white rounded" %>
+<% end %>

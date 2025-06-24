@@ -1,0 +1,31 @@
+<div class="flex flex-col gap-2 w-full">
+    <div class="flex items-center gap-1 font-medium text-base mt-4">
+        <h1>Total Quizes:</h1>
+        <%= @categories.count %>
+    </div>
+    <div class="grid mt-2 lg:grid-cols-3 gap-4 grid-cols-1 sm:grid-cols-2">
+        <% @categories.each do |cat| %>
+
+        <div class="flex group flex-col relative gap-2 p-2 border border-gray-400 rounded-xl shadow-md">
+            <% if cat.category_picurl.attached? %>
+            <div class="aspect-[16/9] overflow-hidden rounded-xl">
+                <%= image_tag url_for(cat.category_picurl), class:"rounded-xl aspect-[16/9] object-cover group-hover:scale-110 transition-all ease-in duration-200" %>
+            </div>
+            <% end %>
+
+            <h1 class="font-semibold capitalize text-2xl"><%= cat.category_name %></h1>
+            <h1 class="font-semibold capitalize text-gray-500 text-xs -mt-2"><%= cat.category_description %></h1>
+            <div class="flex items-center gap-1 font-medium text-sm">
+                <h1>Total Questions:</h1>
+                <%= cat.questions.count %>
+            </div>
+            <div class="flex justify-end">
+                <%= link_to "Join",   answer_public_category_path(cat), class: "bg-gradient-to-br from-blue-400 to-purple-400 h-8 rounded-full px-8 w-fit flex items-center justify-center text-white font-semibold text-sm hover:opacity-90  cursor-pointer" %>
+            </div>
+        </div>
+
+        <% end %>
+    </div>
+
+</div>
+</div>

@@ -1,0 +1,21 @@
+<div class="relative min-h-[calc(100dvh-64px)] flex justify-center items-center overflow-hidden">
+  <!-- Bottom Gradient Overlay -->
+  <div class="fixed top-0 left-0 w-full  h-full bg-gradient-to-r from-rose-50 via-gray-50 to-blue-50 pointer-events-none z-0"></div>
+
+  <!-- Main Content -->
+  <div class="relative z-10 flex flex-col md:max-w-3xl lg:max-w-2xl mx-auto">
+    <div class="bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text">
+      <h1 class="lg:text-5xl text-4xl xl:text-6xl font-bold text-center text-transparent">
+        Test Your Knowledge. Level Up Your Mind.
+      </h1>
+    </div>
+
+    <p class="mt-4 text-sm md:text-base text-center text-gray-800 italic">
+      Discover fun, interactive quizzes across music, movies, tech, and more. Challenge yourself — or compete with friends.
+    </p>
+
+    <div class="flex justify-center mt-8">
+      <%= link_to "Get Started", pages_users_path, class: "bg-gradient-to-br from-blue-400 to-purple-400 h-10 md:h-11 rounded-full px-8 w-fit flex items-center justify-center text-white font-semibold text-base md:text-lg hover:opacity-90 cursor-pointer" %>
+    </div>
+  </div>
+</div>

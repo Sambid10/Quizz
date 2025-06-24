@@ -1,0 +1,63 @@
+<div class="md:max-w-3xl mx-auto">
+    <div class="flex flex-col gap-1 mt-6 mb-8 text-center">
+        <h1 class="font-semibold capitalize text-2xl"><%= @category.category_name %></h1>
+        <h1 class="font-semibold capitalize text-gray-400 text-xs -mt-1"><%= @category.category_description %></h1>
+    </div>
+
+    <%= form_with url: submit_answers_public_category_path(@category), method: :post, local: true do %>
+    <div class="flex flex-col gap-6">
+        <% @questions.each_with_index do |question, index| %>
+        <div class="mb-4 p-4 border rounded-xl shadow-lg flex flex-col gap-2">
+            <p class="text-xl font-medium"><%= "#{index + 1}. #{question.content}" %></p>
+            <% if question.question_picurl.attached? %>
+            <%= image_tag question.question_picurl, alt: "Question image", class: "mt-2 aspect-[16/9] object-contain bg-transparent rounded-xl shadow-lg border border-gray-400" %>
+            <% end %>
+
+            <% answers = [question.answer1, question.answer2, question.answer3, question.answer4] %>
+            <h1 class="text-xl font-medium">Answers:</h1>
+
+            <% answers.each_with_index do |answer_text, i| %>
+            <div class="flex items-start gap-3 py-1 px-2 rounded-xl hover:bg-stone-100 cursor-pointer transition-all">
+                <%= radio_button_tag "answers[#{question.id}]", answer_text, false, id: "question_#{question.id}_answer_#{i}", class: "cursor-pointer mt-2" %>
+                <%= label_tag "question_#{question.id}_answer_#{i}", answer_text, class: "cursor-pointer text-base leading-relaxed select-none" %>
+            </div>
+            <% end %>
+        </div>
+        <% end %>
+
+        <div class="flex justify-end w-full mb-12">
+            <%= submit_tag "Submit Answers", class: "inline-block text-white bg-blue-500 px-4 py-2 rounded hover:bg-blue-600 transition rounded-xl" %>
+        </div>
+    </div>
+    <% end %>
+</div>
+
+<div class="md:max-w-3xl mx-auto">
+    <% if @errors.present? %>
+    <h2 class="text-red-600 font-semibold mb-4">Incorrect Answers:</h2>
+    <% @errors.each do |error| %>
+    <div class="border p-4 mb-4 rounded-xl bg-red-50 shadow flex flex-col gap-2">
+        <p><strong>Question:</strong> <%= error[:question].content %></p>
+
+        <p class="flex items-start gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            <strong class="whitespace-nowrap">Selected answer:</strong>
+            <%= error[:selected_answer] %>
+
+        </p>
+
+        <p class="flex items-start gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-500 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <strong class="whitespace-nowrap">Correct answer:</strong>
+            <%= error[:correct_answer] %>
+
+
+        </p>
+    </div>
+    <% end %>
+    <% end %>
+</div>

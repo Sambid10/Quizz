@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title><%= content_for(:title) || "Quizzz" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+</head>
+
+<body>
+    <%= render "Navbar/navbar" %>
+    <div class="max-w-6xl mx-auto px-4 xl:px-0  min-h-[calc(100dvh-64px)]">
+        <% if flash[:alert].present? %>
+        <div id="flash-message" class="px-6 py-3 mb-4 mx-auto text-center mt-2 rounded-xl md:w-[50%] w-[80%] bg-red-100 text-red-800">
+            <%= flash[:alert] %>
+        </div>
+        <% end %>
+          <% if flash[:success].present? %>
+        <div id="flash-message" class="px-6 py-3 mb-4 rounded-xl mx-auto text-center mt-2  md:w-[50%] w-[80%] bg-green-100 text-green-800">
+            <%= flash[:success] %>
+        </div>
+        <% end %>
+
+        <%= yield %>
+    </div>
+
+
+</body>
+
+
+</html>
